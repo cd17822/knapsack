@@ -2,4 +2,5 @@
 *.swp
 *.log
 *.DS_Store
-*knapsack.txt
+*.txt
+*.dSYM
