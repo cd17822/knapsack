@@ -8,3 +8,4 @@
 #### Output file:
   * __Line 1:__ _the size of the problem_ (i.e., the total number of items), _the optimal value_ (i.e., the maximum profit), _the size (k) of the first optimal solution found_ (i.e., the size of the first optimal subset of items found to produce the maximum profit).
   * __Lines 2 to 2+(k-1):__ the _weight_ and _profit_ of an item selected of an optimal solution.
+  * __Line 2+(k-1)+1:__ Elapsed Time in ms.

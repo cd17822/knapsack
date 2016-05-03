@@ -4,6 +4,9 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <sys/time.h>
+
+struct timeval start, end;
 
 typedef struct {
   int weight;
@@ -38,6 +41,8 @@ int compareItems(const item& a, const item& b){
 }
 
 int main(int argc, char* argv[]){
+  gettimeofday(&start, NULL);
+
   if(argc < 3){
     fprintf(stderr, "Must supply parameters: <input-file> <output-file>\n");
     exit(1);
@@ -62,8 +67,6 @@ int main(int argc, char* argv[]){
       items.push_back(current);
     }
   }
-  for (std::vector<item>::iterator j = items.begin(); j != items.end(); ++j)
-    std::cout << j->weight << "," << j->profit << std::endl;
 
   int matrix[no_items+1][capacity+1];
   for (int i = 0; i < no_items+1; ++i)
@@ -87,6 +90,7 @@ int main(int argc, char* argv[]){
 
   int i = no_items;
   int c = capacity;
+  std::vector<item> final_items;
   while(i > 0 && c > 0){
     if (matrix[i][c] != matrix[i-1][c]){
       final_items.push_back(items[i-1]);
@@ -98,6 +102,9 @@ int main(int argc, char* argv[]){
   out << no_items << "," << matrix[no_items][capacity] << "," << final_items.size() << std::endl;
   for (std::vector<item>::iterator j = final_items.begin(); j != final_items.end(); ++j)
     out << j->weight << "," << j->profit << std::endl;
+
+  gettimeofday(&end, NULL);
+  out << "Elapsed Time: " << ((end.tv_sec  - start.tv_sec) * 1000 + ((end.tv_usec - start.tv_usec)/1000.0) + 0.5) << "ms" << std::endl;
 
   in.close();
   out.close();

@@ -4,6 +4,9 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <sys/time.h>
+
+struct timeval start, end;
 
 typedef struct {
   int weight;
@@ -38,6 +41,8 @@ int compareItems(const item& a, const item& b){
 }
 
 int main(int argc, char* argv[]){
+  gettimeofday(&start, NULL);
+
   if(argc < 3){
     fprintf(stderr, "Must supply parameters: <input-file> <output-file>\n");
     exit(1);
@@ -81,12 +86,18 @@ int main(int argc, char* argv[]){
     }
   }
 
-  out << no_items << "," << current_profit << "," << final_items.size() << std::endl;
+  bool need_fractional = i < items.size();
+  int no_final_items = (need_fractional) ? final_items.size() + 1 : final_items.size();
+
+  out << no_items << "," << current_profit << "," << no_final_items << std::endl;
   for (std::vector<item>::iterator j = final_items.begin(); j != final_items.end(); ++j)
     out << j->weight << "," << j->profit << std::endl;
 
-  if (i < items.size()) // fractional item
+  if (need_fractional) // fractional item
     out << (capacity - current_weight) << "," << ((float)(capacity - current_weight)/items[i].weight)*items[i].profit << std::endl;
+
+  gettimeofday(&end, NULL);
+  out << "Elapsed Time: " << ((end.tv_sec  - start.tv_sec) * 1000 + ((end.tv_usec - start.tv_usec)/1000.0) + 0.5) << "ms" << std::endl;
 
   in.close();
   out.close();
