@@ -27,7 +27,7 @@ brute.o: brute.cpp
 test: all
 	python knapsack.py;
 	> data.txt;
-	for i in smallovercap.txt mediumovercap.txt largeovercap.txt smallundercap.txt mediumundercap.txt largeundercap.txt; do \
+	for i in 10undercap.txt 10overcap.txt 20undercap.txt 20overcap.txt 30undercap.txt 30overcap.txt 40undercap.txt 40overcap.txt 50undercap.txt 50overcap.txt 60undercap.txt 60overcap.txt 70undercap.txt 70overcap.txt 80undercap.txt 80overcap.txt 90undercap.txt 90overcap.txt 100undercap.txt 100overcap.txt; do \
 		echo "./back $$i" >> data.txt; \
 		./back $$i back.txt; \
 		cat back.txt >> data.txt; \
@@ -39,10 +39,6 @@ test: all
 		echo "./greedy $$i" >> data.txt; \
 		./greedy $$i greedy.txt; \
 		cat greedy.txt >> data.txt; \
-		echo "" >> data.txt; \
-		echo "./brute $$i" >> data.txt; \
-		./brute $$i brute.txt; \
-		cat brute.txt >> data.txt; \
 		echo "" >> data.txt; \
 	done;
 

@@ -90,13 +90,13 @@ int main(int argc, char* argv[]){
   bool need_fractional = i < items.size();
   int no_final_items = (need_fractional) ? final_items.size() + 1 : final_items.size();
 
-  fprintf(out, "%d,%d,%d\n", no_items, current_profit, no_final_items);
+  /*fprintf(out, "%d,%d,%d\n", no_items, current_profit, no_final_items);
   for (std::vector<item>::iterator j = final_items.begin(); j != final_items.end(); ++j)
     fprintf(out, "%d,%d\n", j->weight, j->profit);
 
   if (need_fractional) // fractional item
     fprintf(out, "%d,%f\n", (capacity - current_weight), ((float)(capacity - current_weight)/items[i].weight)*items[i].profit);
-
+  */
   gettimeofday(&end, NULL);
   double t2 = end.tv_sec + (end.tv_usec/1000000.0);
   fprintf(out, "%.6lf\n", t2-t1);

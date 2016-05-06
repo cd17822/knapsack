@@ -99,10 +99,10 @@ int main(int argc, char* argv[]){
     i--;
   }
 
-  fprintf(out, "%d,%d,%lu\n", no_items, matrix[no_items][capacity], final_items.size());
+  /*fprintf(out, "%d,%d,%lu\n", no_items, matrix[no_items][capacity], final_items.size());
   for (std::vector<item>::iterator j = final_items.begin(); j != final_items.end(); ++j)
     fprintf(out, "%d,%d\n", j->weight, j->profit);
-
+  */
   gettimeofday(&end, NULL);
   double t2 = end.tv_sec + (end.tv_usec/1000000.0);
   fprintf(out, "%.6lf\n", t2-t1);
