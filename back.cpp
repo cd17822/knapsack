@@ -39,12 +39,16 @@ float KWF(int i, int weight, item* items, int C, int n){
 }
 
 int main(int argc, char** argv){
+  struct timeval start, end;
+  gettimeofday(&start, NULL);
+  double t1 = start.tv_sec + (start.tv_usec/1000000.0);
+  
   if(argc != 3){
     fprintf(stderr, "Usage: ./back <input-file> <output-file>\n");
     exit(1);
   }
 
-  struct timeval start, end;
+
   FILE* input = fopen(argv[1], "r");
   int n, C;
   fscanf(input, "%d,%d", &n, &C);
@@ -61,11 +65,9 @@ int main(int argc, char** argv){
   int maxProfit = 0;
   int maxIncluded = 0;
   
-  gettimeofday(&start, NULL);
-  double t1 = start.tv_sec + (start.tv_usec/1000000.0);
+
   checkNode(0, currentSet, n, C, items, bestSet, maxProfit);
-  gettimeofday(&end, NULL);
-  double t2 = end.tv_sec + (end.tv_usec/1000000.0);
+
 
 
 
@@ -73,12 +75,16 @@ int main(int argc, char** argv){
     if(bestSet[i]) maxIncluded++;
   }
 
+  gettimeofday(&end, NULL);
+  double t2 = end.tv_sec + (end.tv_usec/1000000.0);
+
   FILE* output = fopen(argv[2], "w");
-  fprintf(output, "Elapsed time: %.6lfs\n", t2-t1);
+
   fprintf(output, "%d,%d,%d\n", n, maxProfit, maxIncluded);
   for(int i = 0; i < n; ++i){
     if(bestSet[i]) fprintf(output, "%d,%d\n", items[i].weight, items[i].profit);
   }
+  fprintf(output, "%.6lfs\n", 1000*(t2-t1));
   fclose(output);
 
   free(items);
