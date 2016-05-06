@@ -1,10 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <string>
+#include <string.h>
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <sys/time.h>
+#include <algorithm>
 
 struct timeval start, end;
 
