@@ -46,10 +46,10 @@ int main(int argc, char** argv){
 
   FILE* output = fopen(argv[2], "w");
 
-  fprintf(output, "%d,%d,%d\n", n, maxProfit, maxIncluded);
+  /*fprintf(output, "%d,%d,%d\n", n, maxProfit, maxIncluded);
   for(int i = 0; i < n; ++i){
     if(bestSet[i]) fprintf(output, "%d,%d\n", weights[i], profits[i]);
-  }
+  }*/
   fprintf(output, "%.6lf\n", t2-t1);
   fclose(output);
 
