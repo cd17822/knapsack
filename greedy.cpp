@@ -42,6 +42,7 @@ int compareItems(const item& a, const item& b){
 
 int main(int argc, char* argv[]){
   gettimeofday(&start, NULL);
+  double t1 = start.tv_sec + (start.tv_usec/1000000.0);
 
   if(argc < 3){
     fprintf(stderr, "Must supply parameters: <input-file> <output-file>\n");
@@ -50,8 +51,7 @@ int main(int argc, char* argv[]){
 
   std::ifstream in (argv[1]);
   std::string line;
-  std::ofstream out;
-  out.open(argv[2], std::ofstream::out | std::ofstream::trunc);
+  FILE* out = fopen(argv[2], "w");
   std::vector<item> items;
   int no_items, capacity;
   int line_no = 0;
@@ -89,17 +89,18 @@ int main(int argc, char* argv[]){
   bool need_fractional = i < items.size();
   int no_final_items = (need_fractional) ? final_items.size() + 1 : final_items.size();
 
-  out << no_items << "," << current_profit << "," << no_final_items << std::endl;
+  fprintf(out, "%d,%d,%d\n", no_items, current_profit, no_final_items);
   for (std::vector<item>::iterator j = final_items.begin(); j != final_items.end(); ++j)
-    out << j->weight << "," << j->profit << std::endl;
+    fprintf(out, "%d,%d\n", j->weight, j->profit);
 
   if (need_fractional) // fractional item
-    out << (capacity - current_weight) << "," << ((float)(capacity - current_weight)/items[i].weight)*items[i].profit << std::endl;
+    fprintf(out, "%d,%f\n", (capacity - current_weight), ((float)(capacity - current_weight)/items[i].weight)*items[i].profit);
 
   gettimeofday(&end, NULL);
-  out << "Elapsed Time: " << ((end.tv_sec  - start.tv_sec) * 1000 + ((end.tv_usec - start.tv_usec)/1000.0) + 0.5) << "ms" << std::endl;
+  double t2 = end.tv_sec + (end.tv_usec/1000000.0);
+  fprintf(out, "%.6lf\n", t2-t1);
 
   in.close();
-  out.close();
+  fclose(out);
   return 0;
 }
